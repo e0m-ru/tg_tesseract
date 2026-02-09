@@ -31,7 +31,7 @@ func main() {
 		if update.Message == nil {
 			continue
 		}
-		if update.Message.Text == "/report" {
+		if update.Message.Command() == "/report" {
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "http://80.73.24.45")
 			msg.ReplyToMessageID = update.Message.MessageID
 		}
@@ -59,8 +59,8 @@ func main() {
 
 			response.Body.Close()
 
-			cmd := exec.Command("tesseract", fp, "stdout", "-l", "rus+eng")
-			b, err := cmd.CombinedOutput()
+			cmd := exec.Command("tesseract", fp, "stdout", "-l", "rus")
+			b, err := cmd.Output()
 			if err != nil {
 				log.Fatalf("Tesseract error: %s", err)
 			}
